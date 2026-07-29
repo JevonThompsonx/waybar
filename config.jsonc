@@ -1,66 +1,163 @@
 {
-    "height": 30,
+    "layer": "top",
+    "position": "top",
+    "mod": "dock",
+    "exclusive": true,
+    "passthrough": false,
+    "gtk-layer-shell": true,
     "modules-left": [
-        "sway/workspaces"
-    ],
-    "modules-center": [
+        "clock",
+        "bluetooth",
         "sway/window"
     ],
+    "modules-center": [
+        "custom/wofi",
+        "sway/workspaces"
+    ],
     "modules-right": [
-        "custom/network",
-        "bluetooth",
-        "tray",
-        "clock",
+        "backlight",
         "cpu",
         "memory",
-        "battery"
+        "custom/network",
+        "battery",
+        "temperature"
     ],
-    "tray": {
-        "icon-size": 16,
-        "spacing": 10
+    "sway/window": {
+        "format": "{}",
+        "rewrite": {
+            "(.*) - Falkon": "$1",
+            "(.*) - Alacritty": "$1",
+            "(.*) - Foot": "$1",
+            "(.*) - Chromium": "$1",
+            "(.*) - Firefox": "$1"
+        },
+        "icon": false,
+        "separate-output": true
+    },
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "active-only": false,
+        "all-outputs": true,
+        "on-click": "activate",
+        "format": "{name}",
+        "format-icons": {
+            "urgent": "  ",
+            "default": " ",
+            "empty": ""
+        },
+        "window-rewrite": {
+            "title<.*youtube.*>": " ",
+            "(.*) - Falkon": " ",
+            "(.*) - Chromium": " ",
+            "(.*) - Firefox": " ",
+            "(.*) - Alacritty": " ",
+            "(.*) - Foot": " "
+        },
+        "persistent-workspaces": {
+            "*": 10
+        }
+    },
+    "clock": {
+        "interval": 1,
+        "format": " {:%H:%M:%S}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "format-alt": "{:L%a %d/%m/%y (%H:%M:%S)}",
+        "calendar": {
+            "mode": "month",
+            "mode-mon-col": 3,
+            "weeks-pos": "right",
+            "on-scroll": 1,
+            "format": {
+                "months": "<span color='#ffead3'><b>{}</b></span>",
+                "days": "<span color='#ecc6d9'><b>{}</b></span>",
+                "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+                "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+                "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+            }
+        }
+    },
+    "bluetooth": {
+        "format": " ",
+        "format-disabled": " ",
+        "format-connected": "  {num_connections}",
+        "tooltip-format": "{device_alias}",
+        "tooltip-format-connected": "  {device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}",
+        "on-click": "~/.config/waybar/scripts/bluetooth.sh",
+        "on-click-right": "foot -e bluetoothctl"
+    },
+    "custom/wofi": {
+        "format": " Search",
+        "tooltip-format": "Applications",
+        "on-click": "wofi --show drun"
+    },
+    "backlight": {
+        "device": "intel_backlight",
+        "format": " {percent}%",
+        "format-icons": [
+            "",
+            "",
+            ""
+        ],
+        "on-scroll-up": "light -A 5",
+        "on-scroll-down": "light -U 5",
+        "tooltip-format": "Brightness",
+        "tooltip": true
+    },
+    "cpu": {
+        "interval": 5,
+        "format": " {usage}%",
+        "tooltip": true,
+        "tooltip-format": "CPU: {usage}%",
+        "on-click": "foot -e btop"
+    },
+    "memory": {
+        "interval": 5,
+        "format": " {used:0.1f}G/{total:0.1f}G",
+        "tooltip-format": "Memory: {percentage}%\n{used}GiB / {total}GiB\nSwap: {swapUsed}GiB / {swapTotal}GiB",
+        "on-click": "foot -e btop"
     },
     "custom/network": {
         "exec": "~/.config/waybar/scripts/network.sh",
         "return-type": "json",
         "format": "{}",
-        "on-click": "nm-connection-editor",
         "interval": 5,
+        "on-click": "nm-connection-editor",
+        "on-click-right": "foot -e nmtui",
         "tooltip": true
     },
-    "bluetooth": {
-        "format-on": "\uF293",
-        "format-off": "\uF294",
-        "format-connected": "\uF293 {num_connections}",
-        "tooltip-format": "{device_alias}\n{device_address}",
-        "on-click": "~/.config/waybar/scripts/bluetooth.sh",
-        "interval": 5
-    },
-    "clock": {
-        "format": "\uF017 {:%Y-%m-%d %H:%M:%S}",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "on-click": "foot -e cal",
-        "on-click-right": "foot -e sh -c 'cal -3; read'"
-    },
-    "cpu": {
-        "format": "\uF2DB {usage}%",
-        "tooltip": true,
-        "tooltip-format": "CPU usage: {usage}%\nFrequency: {frequency}GHz\nCores: {cores}",
-        "on-click": "gnome-system-monitor",
-        "interval": 5
-    },
-    "memory": {
-        "format": "\uF85A {used}GB / {total}GB",
-        "tooltip-format": "Memory: {percentage}%\n{used}GiB used of {total}GiB\nSwap: {swapUsed}GiB / {swapTotal}GiB",
-        "on-click": "gnome-system-monitor",
-        "interval": 5
-    },
     "battery": {
-        "format": "\uF0075 {capacity}%",
-        "format-charging": "\uF0083 {capacity}%",
-        "format-plugged": "\uF0079 {capacity}%",
-        "format-icons": ["\uF0077", "\uF0078", "\uF0079", "\uF007A", "\uF007B", "\uF007C"],
-        "tooltip-format": "{time}\n{capacity}% ({power}W)\n{status}",
+        "states": {
+            "good": 75,
+            "warning": 35,
+            "critical": 20
+        },
+        "format": "󰁹 {capacity}%",
+        "format-charging": "󰂃 {capacity}%",
+        "format-plugged": "󰁹 {capacity}%",
+        "format-alt": "{time}",
+        "format-icons": [
+            "󰁷",
+            "󰁸",
+            "󰁹",
+            "󰁺",
+            "󰁻",
+            "󰁼"
+        ],
+        "tooltip-format": "{time}\n{capacity}% ({power}W)",
         "on-click": "~/.config/waybar/scripts/power-menu.sh",
         "interval": 5
+    },
+    "temperature": {
+        "thermal-zone": 0,
+        "interval": 5,
+        "format": "{temperatureC}°C",
+        "format-icons": [
+            ""
+        ],
+        "critical-threshold": 80,
+        "format-critical": " {temperatureC}°C",
+        "tooltip-format": "CPU Temperature",
+        "tooltip": true
     }
 }
