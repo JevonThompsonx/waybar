@@ -72,19 +72,27 @@ tooltip {
     transition: all 0.2s ease-in-out;
 }
 
-/* ACTIVE — vibrant Mauve (Catppuccin purple) with glow + ring.
-   Makes workspaces 1/2/3 unmistakably distinct from each other. */
+/* ACTIVE — multiple visual cues so workspaces 1/2/3 are
+   unmistakable at a glance:
+   1. Background flips to bright Mauve (#cba6f7)
+   2. Text flips to dark Base (#1e1e2e) — color inversion vs inactive
+   3. Pink (#f5c2e7) bottom indicator bar (3px) — like a macOS dock dot
+   4. Lavender (#b4befe) outline border — visible even if shadow clips
+   5. Larger bold text (16px) — bumps up vs inactive 14px
+   6. Strong outer glow — pops against dark background */
 #workspaces button.active {
     color: #1e1e2e;
     background-color: #cba6f7;
     border-radius: 16px;
     min-width: 50px;
-    font-size: 15px;
+    padding: 0 10px 3px 10px;
+    font-size: 16px;
     font-weight: bold;
+    border: 2px solid #b4befe;
+    border-bottom: 3px solid #f5c2e7;
     box-shadow:
-        0 0 8px rgba(203, 166, 247, 0.75),
-        0 0 18px rgba(203, 166, 247, 0.4),
-        inset 0 0 0 1.5px #b4befe;
+        0 0 12px rgba(203, 166, 247, 0.9),
+        0 0 24px rgba(203, 166, 247, 0.5);
     transition: all 0.2s ease-in-out;
 }
 
