@@ -56,37 +56,49 @@ tooltip {
     border-radius: 16px;
     color: #cdd6f4;
     background-color: #2f354a;
-    transition: all 0.3s ease-in-out;
+    font-size: 14px;
+    transition: all 0.2s ease-in-out;
 }
 
 #workspaces button.empty {
     opacity: 0.4;
 }
 
+/* Hover is a subtle highlight — NOT same as active (was bug pre-fix) */
+#workspaces button:hover {
+    background-color: #45475a;
+    color: #cdd6f4;
+    border-radius: 16px;
+    transition: all 0.2s ease-in-out;
+}
+
+/* ACTIVE — vibrant Mauve (Catppuccin purple) with glow + ring.
+   Makes workspaces 1/2/3 unmistakably distinct from each other. */
 #workspaces button.active {
-    color: #2f354a;
-    background-color: #cdd6f4;
+    color: #1e1e2e;
+    background-color: #cba6f7;
     border-radius: 16px;
     min-width: 50px;
-    background-size: 400% 400%;
-    transition: all 0.3s ease-in-out;
+    font-size: 15px;
+    font-weight: bold;
+    box-shadow:
+        0 0 8px rgba(203, 166, 247, 0.75),
+        0 0 18px rgba(203, 166, 247, 0.4),
+        inset 0 0 0 1.5px #b4befe;
+    transition: all 0.2s ease-in-out;
 }
 
 #workspaces button.urgent {
-    background-color: #cdd6f4;
-    color: #2f354a;
+    background-color: #f38ba8;
+    color: #1e1e2e;
     padding: 0 0 0 5px;
     border-radius: 16px;
     min-width: 40px;
-    background-size: 300% 300%;
-}
-
-#workspaces button:hover {
-    background-color: #cdd6f4;
-    color: #2f354a;
-    border-radius: 16px;
-    min-width: 50px;
-    background-size: 400% 400%;
+    font-weight: bold;
+    box-shadow:
+        0 0 6px rgba(243, 139, 168, 0.6),
+        inset 0 0 0 1.5px #eba0ac;
+    transition: all 0.2s ease-in-out;
 }
 
 #clock,
