@@ -1,0 +1,66 @@
+{
+    "height": 30,
+    "modules-left": [
+        "sway/workspaces"
+    ],
+    "modules-center": [
+        "sway/window"
+    ],
+    "modules-right": [
+        "custom/network",
+        "bluetooth",
+        "tray",
+        "clock",
+        "cpu",
+        "memory",
+        "battery"
+    ],
+    "tray": {
+        "icon-size": 16,
+        "spacing": 10
+    },
+    "custom/network": {
+        "exec": "~/.config/waybar/scripts/network.sh",
+        "return-type": "json",
+        "format": "{}",
+        "on-click": "nm-connection-editor",
+        "interval": 5,
+        "tooltip": true
+    },
+    "bluetooth": {
+        "format-on": "\uF293",
+        "format-off": "\uF294",
+        "format-connected": "\uF293 {num_connections}",
+        "tooltip-format": "{device_alias}\n{device_address}",
+        "on-click": "~/.config/waybar/scripts/bluetooth.sh",
+        "interval": 5
+    },
+    "clock": {
+        "format": "\uF017 {:%Y-%m-%d %H:%M:%S}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "on-click": "foot -e cal",
+        "on-click-right": "foot -e sh -c 'cal -3; read'"
+    },
+    "cpu": {
+        "format": "\uF2DB {usage}%",
+        "tooltip": true,
+        "tooltip-format": "CPU usage: {usage}%\nFrequency: {frequency}GHz\nCores: {cores}",
+        "on-click": "gnome-system-monitor",
+        "interval": 5
+    },
+    "memory": {
+        "format": "\uF85A {used}GB / {total}GB",
+        "tooltip-format": "Memory: {percentage}%\n{used}GiB used of {total}GiB\nSwap: {swapUsed}GiB / {swapTotal}GiB",
+        "on-click": "gnome-system-monitor",
+        "interval": 5
+    },
+    "battery": {
+        "format": "\uF0075 {capacity}%",
+        "format-charging": "\uF0083 {capacity}%",
+        "format-plugged": "\uF0079 {capacity}%",
+        "format-icons": ["\uF0077", "\uF0078", "\uF0079", "\uF007A", "\uF007B", "\uF007C"],
+        "tooltip-format": "{time}\n{capacity}% ({power}W)\n{status}",
+        "on-click": "~/.config/waybar/scripts/power-menu.sh",
+        "interval": 5
+    }
+}
